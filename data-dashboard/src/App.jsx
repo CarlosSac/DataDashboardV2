@@ -7,28 +7,49 @@ function App() {
     const [recipes, setRecipes] = useState([]);
 
     useEffect(() => {
-        fetch(
-            `https://api.spoonacular.com/recipes/random?apiKey=${api_key}&number=5`
-        )
-            .then((response) => response.json())
-            .then((data) => {
+        const fetchRecipes = async () => {
+            try {
+                const response = await fetch(
+                    `https://api.spoonacular.com/recipes/random?apiKey=${api_key}&number=5&includeNutrition=true`
+                );
+                const data = await response.json();
                 console.log("API Response:", data);
                 setRecipes(data.recipes);
-            })
-            .catch((error) => console.error("Error fetching data:", error));
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchRecipes();
     }, []);
 
     return (
         <div>
-            <h1>Random Recipes</h1>
-            <ul>
+            <h1>Today's Recipes</h1>
+            <div className='recipe-container'>
                 {recipes.map((recipe) => (
-                    <li key={recipe.id}>
-                        <h2>{recipe.title}</h2>
-                        <img src={recipe.image} alt={recipe.title} />
-                    </li>
+                    <div key={recipe.id} className='recipe-card'>
+                        <img
+                            src={recipe.image}
+                            alt={recipe.title}
+                            className='recipe-image'
+                        />
+                        <div className='recipe-details'>
+                            <h3>{recipe.title}</h3>
+                            <p>Servings: {recipe.servings}</p>
+                            <p>Ready in: {recipe.readyInMinutes} minutes</p>
+                            <p>
+                                Calories:{" "}
+                                {
+                                    recipe.nutrition?.nutrients?.find(
+                                        (n) => n.name === "Calories"
+                                    )?.amount
+                                }
+                            </p>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 }
