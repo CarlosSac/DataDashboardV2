@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
+
+const api_key = import.meta.env.VITE_API_KEY_SPOON;
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [recipes, setRecipes] = useState([]);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        fetch(
+            `https://api.spoonacular.com/recipes/random?apiKey=${api_key}&number=5`
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("API Response:", data);
+                setRecipes(data.recipes);
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+    }, []);
+
+    return (
+        <div>
+            <h1>Random Recipes</h1>
+            <ul>
+                {recipes.map((recipe) => (
+                    <li key={recipe.id}>
+                        <h2>{recipe.title}</h2>
+                        <img src={recipe.image} alt={recipe.title} />
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
-export default App
+export default App;
