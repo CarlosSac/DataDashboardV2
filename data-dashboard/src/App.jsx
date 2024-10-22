@@ -16,7 +16,7 @@ function App() {
         const fetchRecipes = async () => {
             try {
                 const response = await fetch(
-                    `https://api.spoonacular.com/recipes/random?apiKey=${api_key}&number=15&includeNutrition=true`
+                    `https://api.spoonacular.com/recipes/random?apiKey=${api_key}&number=20&includeNutrition=true`
                 );
                 const data = await response.json();
                 console.log("API Response:", data);
@@ -36,6 +36,7 @@ function App() {
             recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setSearchResults(filteredResults);
+        setSelectedFilter({ servings: null, calories: null }); // Reset filters on new search
     };
 
     const handleFilter = (type, value) => {
@@ -44,72 +45,12 @@ function App() {
                 ...prevFilter,
                 [type]: prevFilter[type] === value ? null : value,
             };
-            let filteredResults = recipes;
-
-            if (newFilter.servings) {
-                switch (newFilter.servings) {
-                    case "1-2":
-                        filteredResults = filteredResults.filter(
-                            (recipe) =>
-                                recipe.servings >= 1 && recipe.servings <= 2
-                        );
-                        break;
-                    case "3-4":
-                        filteredResults = filteredResults.filter(
-                            (recipe) =>
-                                recipe.servings >= 3 && recipe.servings <= 4
-                        );
-                        break;
-                    case "5+":
-                        filteredResults = filteredResults.filter(
-                            (recipe) => recipe.servings >= 5
-                        );
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            if (newFilter.calories) {
-                switch (newFilter.calories) {
-                    case "<200":
-                        filteredResults = filteredResults.filter(
-                            (recipe) =>
-                                recipe.nutrition?.nutrients?.find(
-                                    (n) => n.name === "Calories"
-                                )?.amount < 200
-                        );
-                        break;
-                    case "200-500":
-                        filteredResults = filteredResults.filter(
-                            (recipe) =>
-                                recipe.nutrition?.nutrients?.find(
-                                    (n) => n.name === "Calories"
-                                )?.amount >= 200 &&
-                                recipe.nutrition?.nutrients?.find(
-                                    (n) => n.name === "Calories"
-                                )?.amount <= 500
-                        );
-                        break;
-                    case ">500":
-                        filteredResults = filteredResults.filter(
-                            (recipe) =>
-                                recipe.nutrition?.nutrients?.find(
-                                    (n) => n.name === "Calories"
-                                )?.amount > 500
-                        );
-                        break;
-                    default:
-                        break;
-                }
-            }
-
             return newFilter;
         });
     };
 
     useEffect(() => {
-        let filteredResults = recipes;
+        let filteredResults = searchResults;
 
         if (selectedFilter.servings) {
             switch (selectedFilter.servings) {
@@ -168,7 +109,7 @@ function App() {
         }
 
         setSearchResults(filteredResults);
-    }, [selectedFilter, recipes]);
+    }, [selectedFilter, searchResults]);
 
     return (
         <div className='app-container'>
