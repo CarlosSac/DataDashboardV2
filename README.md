@@ -1,10 +1,10 @@
- Web Development Project 5 - *Food Hub*
+ Web Development Project 5 - *Fork Frenzy*
 
 Submitted by: **Carlos Sac**
 
-This web app: **insert description**
+This web app: **Get new recipe recomendations each day, filter by serving size or calories to find your perfect recipe**
 
-Time spent: **X** hours spent in total
+Time spent: **5** hours spent in total
 
 ## Required Features
 
