@@ -1,63 +1,107 @@
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
+.app-container {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid black;
+    border-left: none;
+    display: flex;
+    flex-direction: column;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    gap: 20px;
+    color: black;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+}
+
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filters h3 {
+    margin: 0;
+}
+
+.filters button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filters button.active {
+    background-color: #0056b3;
+}
+
+.filters button:hover {
+    background-color: #0056b3;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    color: black;
+}
+
+.main-content h1 {
+    margin-top: 0;
     text-align: center;
 }
 
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-}
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-        animation: logo-spin infinite 20s linear;
-    }
-}
-
-.card {
-    padding: 2em;
-}
-
-.read-the-docs {
-    color: #888;
-}
-
 .recipe-container {
-    justify-content: center;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
 }
 
 .recipe-card {
     display: flex;
     flex-direction: row;
     align-items: center;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
     width: 100%;
     max-width: 600px;
+    background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .recipe-image {
@@ -70,12 +114,11 @@
 
 .recipe-details {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.recipe-details h2,
+.recipe-details h3,
 .recipe-details p {
     margin: 0;
 }
