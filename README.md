@@ -1,10 +1,10 @@
- Web Development Project 5 - *Food Hub*
+ Web Development Project 5 - *Fork Frenzy*
 
 Submitted by: **Carlos Sac**
 
-This web app: **insert description**
+This web app: **Get new recipe recomendations each day, filter by serving size or calories to find your perfect recipe**
 
-Time spent: **X** hours spent in total
+Time spent: **5** hours spent in total
 
 ## Required Features
 
@@ -14,12 +14,12 @@ The following **required** functionality is completed:
 - [x] **Data uses the useEffect React hook and async/await syntax**
 - [x] **The app dashboard includes at least three summary statistics about the data such as**
   - [x] *Servings, Ready Time, and Calories per portion*
-- [ ] **A search bar allows the user to search for an item in the fetched data**
-- [ ] **Multiple different filters (2+) allow the user to filter items in the database by specified categories**
+- [x] **A search bar allows the user to search for an item in the fetched data**
+- [x] **Multiple different filters (2+) allow the user to filter items in the database by specified categories**
 
 The following **optional** features are implemented:
 
-- [ ] Multiple filters can be applied simultaneously
+- [x] Multiple filters can be applied simultaneously
 - [ ] Filters use different input types such as a text input, a selection, or a slider
 - [ ] The user can enter specific bounds for filter values
 
