@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import Sidebar from "./components/Sidebar";
+import RecipeCard from "./components/RecipeCard";
 
 const api_key = import.meta.env.VITE_API_KEY_SPOON;
 
@@ -50,7 +52,9 @@ function App() {
     };
 
     useEffect(() => {
-        let filteredResults = searchResults;
+        let filteredResults = recipes.filter((recipe) =>
+            recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
         if (selectedFilter.servings) {
             switch (selectedFilter.servings) {
@@ -109,100 +113,22 @@ function App() {
         }
 
         setSearchResults(filteredResults);
-    }, [selectedFilter, searchResults]);
+    }, [selectedFilter, searchQuery, recipes]);
 
     return (
         <div className='app-container'>
-            <aside className='sidebar'>
-                <h2>Search Recipes</h2>
-                <form onSubmit={handleSearch} className='search-form'>
-                    <input
-                        type='text'
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder='Search for a recipe...'
-                    />
-                    <button type='submit'>Search</button>
-                </form>
-                <div className='filters'>
-                    <h3>Servings</h3>
-                    <button
-                        className={
-                            selectedFilter.servings === "1-2" ? "active" : ""
-                        }
-                        onClick={() => handleFilter("servings", "1-2")}
-                    >
-                        1-2
-                    </button>
-                    <button
-                        className={
-                            selectedFilter.servings === "3-4" ? "active" : ""
-                        }
-                        onClick={() => handleFilter("servings", "3-4")}
-                    >
-                        3-4
-                    </button>
-                    <button
-                        className={
-                            selectedFilter.servings === "5+" ? "active" : ""
-                        }
-                        onClick={() => handleFilter("servings", "5+")}
-                    >
-                        5+
-                    </button>
-                    <h3>Calories</h3>
-                    <button
-                        className={
-                            selectedFilter.calories === "<200" ? "active" : ""
-                        }
-                        onClick={() => handleFilter("calories", "<200")}
-                    >
-                        {"<200"}
-                    </button>
-                    <button
-                        className={
-                            selectedFilter.calories === "200-500"
-                                ? "active"
-                                : ""
-                        }
-                        onClick={() => handleFilter("calories", "200-500")}
-                    >
-                        200-500
-                    </button>
-                    <button
-                        className={
-                            selectedFilter.calories === ">500" ? "active" : ""
-                        }
-                        onClick={() => handleFilter("calories", ">500")}
-                    >
-                        {">500"}
-                    </button>
-                </div>
-            </aside>
+            <Sidebar
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                handleSearch={handleSearch}
+                selectedFilter={selectedFilter}
+                handleFilter={handleFilter}
+            />
             <div className='main-content'>
                 <h1>Today's Recipes</h1>
                 <div className='recipe-container'>
                     {searchResults.map((recipe) => (
-                        <div key={recipe.id} className='recipe-card'>
-                            <img
-                                src={recipe.image}
-                                alt={recipe.title}
-                                className='recipe-image'
-                            />
-                            <div className='recipe-details'>
-                                <h3>{recipe.title}</h3>
-                                <p>Servings: {recipe.servings}</p>
-                                <p>Ready in: {recipe.readyInMinutes} minutes</p>
-                                <p>
-                                    Calories:{" "}
-                                    {
-                                        recipe.nutrition?.nutrients?.find(
-                                            (n) => n.name === "Calories"
-                                        )?.amount
-                                    }
-                                </p>
-                            </div>
-                        </div>
+                        <RecipeCard key={recipe.id} recipe={recipe} />
                     ))}
                 </div>
             </div>
