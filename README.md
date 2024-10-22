@@ -1,4 +1,4 @@
-# Web Development Project 6 - *Name of App Here*
+ Web Development Project 5 - *Food Hub*
 
 Submitted by: **Carlos Sac**
 
@@ -10,17 +10,18 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] **The app includes at least one unique chart developed using the fetched data that tell an interesting story**
-- [ ] **Clicking on an item in the list view displays more details about it**
-  - [ ] To ensure an accurate grade, your sidebar **must** be viewable when showing the details view in your recording.
-- [ ] **Clicking on an item has a direct, unique link to that item's detail view page**
-  - [ ] To ensure an accurate grade, the URL/address bar of your web browser **must** be viewable in your recording.  
-
+- [x] **The list displays a list of data fetched using an API call**
+- [x] **Data uses the useEffect React hook and async/await syntax**
+- [x] **The app dashboard includes at least three summary statistics about the data such as**
+  - [x] *Servings, Ready Time, and Calories per portion*
+- [ ] **A search bar allows the user to search for an item in the fetched data**
+- [ ] **Multiple different filters (2+) allow the user to filter items in the database by specified categories**
 
 The following **optional** features are implemented:
 
-- [ ] The site's customized dashboard contains more content that explains what is interesting about the data
-- [ ] The site allows users to toggle between different data visualizations
+- [ ] Multiple filters can be applied simultaneously
+- [ ] Filters use different input types such as a text input, a selection, or a slider
+- [ ] The user can enter specific bounds for filter values
 
 The following **additional** features are implemented:
 
