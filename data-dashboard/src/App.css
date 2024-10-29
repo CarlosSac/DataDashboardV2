@@ -4,10 +4,13 @@
 
 .sidebar {
     width: 250px;
+    height: 100vh; /* Full viewport height */
+    position: fixed; /* Fix the sidebar position */
+    top: 0;
+    left: 0;
     padding: 20px;
     background: rgba(255, 255, 255, 0.8);
-    border: 1px solid black;
-    border-left: none;
+    border-right: 1px solid black;
     display: flex;
     flex-direction: column;
     border-top-right-radius: 8px;
@@ -75,6 +78,7 @@
 .main-content {
     flex: 1;
     padding: 20px;
+    margin-left: 270px;
     color: black;
 }
 
@@ -121,4 +125,80 @@
 .recipe-details h3,
 .recipe-details p {
     margin: 0;
+}
+
+.app-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipe-list {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.recipe-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.chart-card {
+    width: 20em; /* Adjust the width to fit the content */
+    height: 20em; /* Adjust the height to fit the content */
+    padding: 10px; /* Adjust the padding as needed */
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid black;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-card h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.recipe-detail-card {
+    width: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid black;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto; /* Center the card horizontally */
+}
+
+.recipe-detail-card img {
+    width: 400px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.recipe-detail-card h1 {
+    margin: 0;
+    text-align: center;
+}
+
+.recipe-detail-card p {
+    margin: 5px 0;
+    text-align: center;
+}
+
+.recipe-detail-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
 }

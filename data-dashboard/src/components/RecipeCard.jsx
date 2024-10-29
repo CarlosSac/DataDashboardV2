@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const RecipeCard = ({ recipe }) => {
     return (
@@ -20,6 +21,9 @@ const RecipeCard = ({ recipe }) => {
                         )?.amount
                     }
                 </p>
+                <Link to={`/recipe/${recipe.id}`}>
+                    <button className='details-button'>See More Details</button>
+                </Link>
             </div>
         </div>
     );

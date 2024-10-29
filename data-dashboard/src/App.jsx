@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import Sidebar from "./components/Sidebar";
 import RecipeCard from "./components/RecipeCard";
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+} from "recharts";
 
-const api_key = import.meta.env.VITE_API_KEY_SPOON;
-
-function App() {
-    const [recipes, setRecipes] = useState([]);
+function App({ recipes }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState({
@@ -15,22 +21,8 @@ function App() {
     });
 
     useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await fetch(
-                    `https://api.spoonacular.com/recipes/random?apiKey=${api_key}&number=20&includeNutrition=true`
-                );
-                const data = await response.json();
-                console.log("API Response:", data);
-                setRecipes(data.recipes);
-                setSearchResults(data.recipes); // Initialize search results with all recipes
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        fetchRecipes();
-    }, []);
+        setSearchResults(recipes); // Initialize search results with all recipes
+    }, [recipes]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -113,24 +105,51 @@ function App() {
         }
 
         setSearchResults(filteredResults);
-    }, [selectedFilter, searchQuery, recipes]);
+    }, [searchQuery, selectedFilter, recipes]);
+
+    // Prepare data for the Bar Chart
+    const calorieRanges = [
+        { range: "<200", count: 0 },
+        { range: "200-500", count: 0 },
+        { range: ">500", count: 0 },
+    ];
+
+    searchResults.forEach((recipe) => {
+        const calories = recipe.nutrition?.nutrients?.find(
+            (n) => n.name === "Calories"
+        )?.amount;
+
+        if (calories < 200) {
+            calorieRanges[0].count += 1;
+        } else if (calories >= 200 && calories <= 500) {
+            calorieRanges[1].count += 1;
+        } else if (calories > 500) {
+            calorieRanges[2].count += 1;
+        }
+    });
 
     return (
-        <div className='app-container'>
-            <Sidebar
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                handleSearch={handleSearch}
-                selectedFilter={selectedFilter}
-                handleFilter={handleFilter}
-            />
-            <div className='main-content'>
+        <div className='app-content'>
+            <div className='recipe-list'>
                 <h1>Today's Recipes</h1>
                 <div className='recipe-container'>
                     {searchResults.map((recipe) => (
                         <RecipeCard key={recipe.id} recipe={recipe} />
                     ))}
                 </div>
+            </div>
+            <div className='chart-card'>
+                <h2>Recipe Calorie Distribution</h2>
+                <ResponsiveContainer width='100%' height={200}>
+                    <BarChart data={calorieRanges}>
+                        <CartesianGrid strokeDasharray='3 3' />
+                        <XAxis dataKey='range' />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey='count' fill='#007bff' />
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
         </div>
     );
